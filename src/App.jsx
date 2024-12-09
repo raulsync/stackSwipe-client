@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import Feed from "./components/Feed";
 
 function App() {
   return (
@@ -11,6 +12,10 @@ function App() {
           path="/"
           element={<Body />}
         >
+          <Route
+            path="/"
+            element={<Feed />}
+          />
           <Route
             path="/login"
             element={<Login />}
