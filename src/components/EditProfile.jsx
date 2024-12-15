@@ -3,7 +3,7 @@ import UserCard from "./UserCard";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { addUser } from "../features/userSlice";
+import { addUser } from "../app/features/userSlice";
 
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName || "");
@@ -45,9 +45,9 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="flex justify-center my-2 items-center">
+      <div className="flex justify-center items-stretch my-10">
         <div className="flex justify-center mx-10">
-          <div className="card bg-base-300 w-96 shadow-xl">
+          <div className="card bg-base-300 w-96 h-auto shadow-xl">
             <div className="card-body">
               <h2 className="card-title justify-center">Edit Profile</h2>
               <div>
@@ -63,19 +63,19 @@ const EditProfile = ({ user }) => {
                   />
                 </label>
                 <label className="form-control w-full max-w-xs">
-                  <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                      <span className="label-text">Last Name:</span>
-                    </div>
-                    <input
-                      type="text"
-                      value={lastName}
-                      className="py-2 px-3 bg-base-100 rounded-lg outline-none w-full max-w-xs"
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </label>
                   <div className="label">
-                    <span className="label-text">Photo URL :</span>
+                    <span className="label-text">Last Name:</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={lastName}
+                    className="py-2 px-3 bg-base-100 rounded-lg outline-none w-full max-w-xs"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Photo URL:</span>
                   </div>
                   <input
                     type="text"

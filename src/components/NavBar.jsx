@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
-import { removeUser } from "../features/userSlice";
+import { removeUser } from "../app/features/userSlice";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user);
@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar bg-base-200">
-      <div className="flex-1">
+      <div className="flex-1 text-pink-700">
         <Link
           to={"/"}
           className="btn btn-ghost text-xl"
