@@ -1,136 +1,213 @@
-import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser } from "../store/features/userSlice.js";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { addUser } from "../store/features/userSlice.js";
 import { BASE_URL } from "../utils/constants";
+import {
+  Mail,
+  Lock,
+  User,
+  Loader2,
+  AlertCircle,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("");
-  const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    emailId: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const res = await axios.post(
-        BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      // console.log(res.data);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
+  };
 
-      dispatch(addUser(res.data));
-      navigate("/");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      if (!formData.emailId || !formData.password) {
+        throw new Error("Please fill in all required fields");
+      }
+
+      if (!isLogin && (!formData.firstName || !formData.lastName)) {
+        throw new Error("Please fill in all required fields");
+      }
+
+      const endpoint = isLogin ? "/login" : "/signup";
+      const payload = isLogin
+        ? { emailId: formData.emailId, password: formData.password }
+        : formData;
+
+      const res = await axios.post(`${BASE_URL}${endpoint}`, payload, {
+        withCredentials: true,
+      });
+
+      dispatch(addUser(isLogin ? res.data : res.data.data));
+      navigate(isLogin ? "/" : "/profile");
     } catch (error) {
-      setError(error?.response?.data || "Something went wrong");
-      console.log(error.message);
+      setError(
+        error?.response?.data || error.message || "Something went wrong"
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleSignUp = async () => {
-    try {
-      const res = await axios.post(
-        BASE_URL + "/signup",
-        {
-          firstName,
-          lastName,
-          emailId,
-          password,
-        },
-        { withCredentials: true }
-      );
-      console.log(res?.data?.data);
-      dispatch(addUser(res?.data?.data));
-      return navigate("/profile");
-    } catch (error) {
-      console.error("Error occured in signUp new user", error.message);
-    }
+  const toggleAuth = () => {
+    setIsLogin(!isLogin);
+    setError("");
+    setFormData({
+      firstName: "",
+      lastName: "",
+      emailId: "",
+      password: "",
+    });
   };
 
   return (
-    <div className="flex justify-center items-center my-10 h-[600px]">
-      <div className="card bg-base-300 w-96 shadow-xl">
-        <div className="card-body flex gap-2">
-          <h2 className="card-title font-bold">
-            {!isLogin ? "Sign Up" : "Login"}
-          </h2>
-          {!isLogin && (
-            <>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text font-semibold">FirstName</span>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Type here"
-                  className="input  w-full max-w-xs"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text font-semibold">LastName</span>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Type here"
-                  className="input  w-full max-w-xs"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </label>
-            </>
-          )}
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-semibold">Email</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input  w-full max-w-xs"
-              value={emailId}
-              onChange={(e) => setEmailId(e.target.value)}
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-semibold">Password</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input  w-full max-w-xs"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <p className="text-red-900 text-sm">{error}</p>
-          <div className="card-actions justify-center my-2">
-            <button
-              className="btn btn-secondary w-44"
-              onClick={isLogin ? handleLogin : handleSignUp}
-            >
-              {!isLogin ? "SignUp" : "Login"}
-            </button>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-base-200">
+      <div className="card w-full max-w-md bg-base-100 shadow-xl">
+        <div className="card-body p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">
+              {isLogin ? "Welcome Back!" : "Create Account"}
+            </h1>
+            <p className="text-base-content/60">
+              {isLogin
+                ? "Enter your credentials to access your account"
+                : "Join our community and start connecting"}
+            </p>
           </div>
-          <p
-            className="text-center cursor-pointer text-blue-300"
-            onClick={() => setIsLogin((prev) => !prev)}
+
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4"
           >
-            {isLogin ? "New user signup here" : "Existing user login here"}
-          </p>
+            {!isLogin && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">First Name</span>
+                    <User className="w-4 h-4 text-base-content/40" />
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="John"
+                    className="input input-bordered w-full focus:input-primary"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Last Name</span>
+                    <User className="w-4 h-4 text-base-content/40" />
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Doe"
+                    className="input input-bordered w-full focus:input-primary"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+                <Mail className="w-4 h-4 text-base-content/40" />
+              </label>
+              <input
+                type="email"
+                name="emailId"
+                value={formData.emailId}
+                onChange={handleInputChange}
+                placeholder="you@example.com"
+                className="input input-bordered w-full focus:input-primary"
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
+                <Lock className="w-4 h-4 text-base-content/40" />
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  className="input input-bordered w-full focus:input-primary pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <div className="alert alert-error">
+                <AlertCircle className="w-4 h-4" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className={`btn btn-primary w-full ${isLoading ? "loading" : ""}`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : isLogin ? (
+                "Sign In"
+              ) : (
+                "Create Account"
+              )}
+            </button>
+
+            <div className="divider">OR</div>
+
+            <button
+              type="button"
+              onClick={toggleAuth}
+              className="btn btn-outline btn-block"
+            >
+              {isLogin ? "Create new account" : "Sign in to existing account"}
+            </button>
+          </form>
         </div>
       </div>
     </div>

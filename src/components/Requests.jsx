@@ -71,7 +71,7 @@ const Requests = () => {
               {age && gender && (
                 <p className="text-gray-400">{age + ", " + gender}</p>
               )}
-              <p className="text-gray-300">{about}</p>
+              <p className="text-gray-500">{about}</p>
             </div>
             <div className="flex gap-3">
               <button

@@ -11,6 +11,7 @@ import { useEffect } from "react";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const fetchUser = async () => {
     try {
       const res = await axios.get(BASE_URL + "/profile/view", {
@@ -30,9 +31,13 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <NavBar />
-      <Outlet />
+
+      <main className="flex-grow justify-center">
+        <Outlet />
+      </main>
+
       <Footer />
     </div>
   );

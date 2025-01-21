@@ -7,6 +7,6 @@ export default {
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["dracula"],
+    themes: ["minimal", "light", "cupcake", "forest", "corporate"],
   },
 };
