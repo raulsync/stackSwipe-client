@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
@@ -31,11 +30,13 @@ const Body = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-base-100 flex flex-col">
       <NavBar />
 
-      <main className="flex-grow justify-center">
-        <Outlet />
+      <main className="flex-1 pt-20 pb-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <Outlet />
+        </div>
       </main>
 
       <Footer />

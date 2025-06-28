@@ -12,10 +12,11 @@ import {
   AlertCircle,
   Eye,
   EyeOff,
+  Heart,
 } from "lucide-react";
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -83,17 +84,22 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-base-200">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl">
-        <div className="card-body p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">
-              {isLogin ? "Welcome Back!" : "Create Account"}
-            </h1>
-            <p className="text-base-content/60">
+    <div className="min-h-[81vh] flex items-center justify-center px-4 py-8 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+      <div className="card w-full max-w-lg bg-base-100 shadow-2xl border border-base-300">
+        <div className="card-body p-6 sm:p-8">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Heart className="w-8 h-8 text-primary" />
+              <h1 className="text-3xl font-bold text-primary">stackSwipe</h1>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">
+              {isLogin ? "Welcome Back!" : "Join ConnectMe"}
+            </h2>
+            <p className="text-base-content/60 text-sm sm:text-base">
               {isLogin
-                ? "Enter your credentials to access your account"
-                : "Join our community and start connecting"}
+                ? "Sign in to continue your journey"
+                : "Start your journey to meaningful connections"}
             </p>
           </div>
 
@@ -102,76 +108,82 @@ const Login = () => {
             className="space-y-4"
           >
             {!isLogin && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">First Name</span>
-                    <User className="w-4 h-4 text-base-content/40" />
+                    <span className="label-text font-medium">First Name</span>
                   </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="John"
-                    className="input input-bordered w-full focus:input-primary"
-                  />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      placeholder="John"
+                      className="input input-bordered w-full pl-10 focus:input-primary transition-all duration-200"
+                    />
+                  </div>
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Last Name</span>
-                    <User className="w-4 h-4 text-base-content/40" />
+                    <span className="label-text font-medium">Last Name</span>
                   </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Doe"
-                    className="input input-bordered w-full focus:input-primary"
-                  />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="Doe"
+                      className="input input-bordered w-full pl-10 focus:input-primary transition-all duration-200"
+                    />
+                  </div>
                 </div>
               </div>
             )}
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
-                <Mail className="w-4 h-4 text-base-content/40" />
+                <span className="label-text font-medium">Email</span>
               </label>
-              <input
-                type="email"
-                name="emailId"
-                value={formData.emailId}
-                onChange={handleInputChange}
-                placeholder="you@example.com"
-                className="input input-bordered w-full focus:input-primary"
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                <input
+                  type="email"
+                  name="emailId"
+                  value={formData.emailId}
+                  onChange={handleInputChange}
+                  placeholder="you@example.com"
+                  className="input input-bordered w-full pl-10 focus:input-primary transition-all duration-200"
+                />
+              </div>
             </div>
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
-                <Lock className="w-4 h-4 text-base-content/40" />
+                <span className="label-text font-medium">Password</span>
               </label>
               <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-base-content/40" />
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="••••••••"
-                  className="input input-bordered w-full focus:input-primary pr-10"
+                  className="input input-bordered w-full pl-10 pr-12 focus:input-primary transition-all duration-200"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors duration-200"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
+                    <EyeOff className="w-5 h-5" />
                   ) : (
-                    <Eye className="w-4 h-4" />
+                    <Eye className="w-5 h-5" />
                   )}
                 </button>
               </div>
@@ -179,14 +191,14 @@ const Login = () => {
 
             {error && (
               <div className="alert alert-error">
-                <AlertCircle className="w-4 h-4" />
-                <span>{error}</span>
+                <AlertCircle className="w-5 h-5" />
+                <span className="text-sm">{error}</span>
               </div>
             )}
 
             <button
               type="submit"
-              className={`btn btn-primary w-full ${isLoading ? "loading" : ""}`}
+              className="btn btn-primary w-full text-lg"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -198,12 +210,12 @@ const Login = () => {
               )}
             </button>
 
-            <div className="divider">OR</div>
+            <div className="divider text-base-content/60">OR</div>
 
             <button
               type="button"
               onClick={toggleAuth}
-              className="btn btn-outline btn-block"
+              className="btn btn-outline btn-block hover:btn-primary transition-all duration-200"
             >
               {isLogin ? "Create new account" : "Sign in to existing account"}
             </button>
