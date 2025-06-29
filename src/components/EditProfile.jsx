@@ -11,6 +11,7 @@ import {
   Edit,
   CheckCircle,
   AlertCircle,
+  Sparkles,
 } from "lucide-react";
 
 const EditProfile = ({ user }) => {
@@ -60,159 +61,181 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="min-h-[80vh] max-w-7xl mx-auto px-4">
+    <div className="min-h-[80vh] max-w-7xl mx-auto px-4 relative">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-10 left-10 w-48 h-48 bg-cosmic-100 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-float"></div>
+        <div className="absolute bottom-10 right-10 w-48 h-48 bg-nebula-100 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-float animation-delay-3000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-aurora-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+      </div>
+
       {/* Header */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-6 relative z-10">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Edit className="w-8 h-8 text-primary" />
-          <h1 className="text-2xl sm:text-3xl font-bold text-base-content">
+          <div className="w-10 h-10 bg-gradient-to-r from-cosmic-500 to-nebula-500 rounded-xl flex items-center justify-center animate-glow">
+            <Edit className="w-6 h-6 text-white" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cosmic-600 to-nebula-600 bg-clip-text text-transparent">
             Edit Your Profile
           </h1>
         </div>
-        <p className="text-base-content/60 text-sm sm:text-base">
+        <p className="text-gray-600 text-sm sm:text-base">
           Make your profile shine and attract the right connections
         </p>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 relative z-10">
         {/* Profile Edit Form */}
-        <div className="card bg-base-100 shadow-xl border border-base-300">
-          <div className="card-body p-4 sm:p-6">
-            <h2 className="card-title mb-4 flex items-center gap-2">
-              <User2 className="w-6 h-6" />
-              Personal Information
-            </h2>
+        <div className="relative group">
+          {/* Glow effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-cosmic-400 to-nebula-400 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-700"></div>
 
-            <div className="space-y-4">
-              {/* Name Fields */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="relative bg-white/20 backdrop-blur-xl shadow-xl border border-white/30 rounded-2xl overflow-hidden">
+            <div className="p-4 sm:p-6">
+              <h2 className="flex items-center gap-2 text-xl font-bold text-gray-800 mb-4">
+                <User2 className="w-6 h-6 text-cosmic-500" />
+                Personal Information
+              </h2>
+
+              <div className="space-y-4">
+                {/* Name Fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium text-gray-700">
+                        First Name
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={firstName}
+                      className="input bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Enter your first name"
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium text-gray-700">
+                        Last Name
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={lastName}
+                      className="input bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Enter your last name"
+                    />
+                  </div>
+                </div>
+
+                {/* Photo URL */}
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">First Name</span>
+                    <span className="label-text font-medium flex items-center gap-2 text-gray-700">
+                      <Camera className="w-4 h-4 text-cosmic-500" />
+                      Photo URL
+                    </span>
                   </label>
                   <input
-                    type="text"
-                    value={firstName}
-                    className="input input-bordered focus:input-primary transition-all duration-200"
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Enter your first name"
+                    type="url"
+                    value={photoUrl}
+                    className="input bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                    onChange={(e) => setPhotoUrl(e.target.value)}
+                    placeholder="https://example.com/your-photo.jpg"
                   />
+                  <label className="label">
+                    <span className="label-text-alt text-gray-500">
+                      Add a URL to your profile picture
+                    </span>
+                  </label>
                 </div>
 
+                {/* Age and Gender */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium text-gray-700">
+                        Age
+                      </span>
+                    </label>
+                    <input
+                      type="number"
+                      value={age}
+                      className="input bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                      onChange={(e) => setAge(e.target.value)}
+                      placeholder="25"
+                      min="18"
+                      max="100"
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium text-gray-700">
+                        Gender
+                      </span>
+                    </label>
+                    <select
+                      value={gender}
+                      className="select bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                      <option value="">Select gender</option>
+                      <option value="male">male</option>
+                      <option value="female">female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* About */}
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Last Name</span>
+                    <span className="label-text font-medium text-gray-700">
+                      About Me
+                    </span>
                   </label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    className="input input-bordered focus:input-primary transition-all duration-200"
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Enter your last name"
+                  <textarea
+                    value={about}
+                    className="textarea h-20 bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                    onChange={(e) => setAbout(e.target.value)}
+                    placeholder="Tell others about yourself, your interests, and what you're looking for..."
+                    maxLength="300"
                   />
-                </div>
-              </div>
-
-              {/* Photo URL */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-medium flex items-center gap-2">
-                    <Camera className="w-4 h-4" />
-                    Photo URL
-                  </span>
-                </label>
-                <input
-                  type="url"
-                  value={photoUrl}
-                  className="input input-bordered focus:input-primary transition-all duration-200"
-                  onChange={(e) => setPhotoUrl(e.target.value)}
-                  placeholder="https://example.com/your-photo.jpg"
-                />
-                <label className="label">
-                  <span className="label-text-alt text-base-content/60">
-                    Add a URL to your profile picture
-                  </span>
-                </label>
-              </div>
-
-              {/* Age and Gender */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Age</span>
+                    <span className="label-text-alt text-gray-500">
+                      {about.length}/300 characters
+                    </span>
                   </label>
-                  <input
-                    type="number"
-                    value={age}
-                    className="input input-bordered focus:input-primary transition-all duration-200"
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder="25"
-                    min="18"
-                    max="100"
-                  />
                 </div>
 
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text font-medium">Gender</span>
-                  </label>
-                  <select
-                    value={gender}
-                    className="select select-bordered focus:select-primary transition-all duration-200"
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="">Select gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Non-binary">Non-binary</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* About */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-medium">About Me</span>
-                </label>
-                <textarea
-                  value={about}
-                  className="textarea textarea-bordered h-20 focus:textarea-primary transition-all duration-200"
-                  onChange={(e) => setAbout(e.target.value)}
-                  placeholder="Tell others about yourself, your interests, and what you're looking for..."
-                  maxLength="300"
-                />
-                <label className="label">
-                  <span className="label-text-alt text-base-content/60">
-                    {about.length}/300 characters
-                  </span>
-                </label>
-              </div>
-
-              {/* Error Display */}
-              {error && (
-                <div className="alert alert-error">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="text-sm">{error}</span>
-                </div>
-              )}
-
-              {/* Save Button */}
-              <button
-                className="btn btn-primary w-full text-lg"
-                onClick={saveProfile}
-                disabled={isLoading || !firstName || !lastName}
-              >
-                {isLoading ? (
-                  <span className="loading loading-spinner loading-sm"></span>
-                ) : (
-                  <>
-                    <Save className="w-5 h-5" />
-                    Save Profile
-                  </>
+                {/* Error Display */}
+                {error && (
+                  <div className="alert bg-red-100/50 border border-red-200 text-red-700 rounded-xl">
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="text-sm">{error}</span>
+                  </div>
                 )}
-              </button>
+
+                {/* Save Button */}
+                <button
+                  className="btn w-full text-lg bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white border-none hover:from-cosmic-600 hover:to-nebula-600 hover:scale-[1.02] transition-all duration-300 shadow-lg rounded-xl disabled:opacity-50"
+                  onClick={saveProfile}
+                  disabled={isLoading || !firstName || !lastName}
+                >
+                  {isLoading ? (
+                    <span className="loading loading-spinner loading-sm"></span>
+                  ) : (
+                    <>
+                      <Save className="w-5 h-5" />
+                      Save Profile
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -220,10 +243,10 @@ const EditProfile = ({ user }) => {
         {/* Preview Card */}
         <div className="space-y-4">
           <div className="text-center">
-            <h3 className="text-lg sm:text-xl font-bold text-base-content mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-2">
               Profile Preview
             </h3>
-            <p className="text-base-content/60 text-sm">
+            <p className="text-gray-600 text-sm">
               This is how others will see your profile
             </p>
           </div>
@@ -248,9 +271,9 @@ const EditProfile = ({ user }) => {
       {/* Success Toast */}
       {showToast && (
         <div className="toast toast-top toast-center z-50">
-          <div className="alert alert-success">
+          <div className="alert bg-aurora-100 border border-aurora-300 text-aurora-800 rounded-xl shadow-lg">
             <CheckCircle className="w-5 h-5" />
-            <span>Profile saved successfully!</span>
+            <span>Profile saved successfully</span>
           </div>
         </div>
       )}

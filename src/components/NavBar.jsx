@@ -4,7 +4,15 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { removeUser } from "../store/features/userSlice";
 import { BASE_URL } from "../utils/constants";
-import { LogOut, User2, Users, Bell, Heart, Menu } from "lucide-react";
+import {
+  LogOut,
+  User2,
+  Users,
+  Bell,
+  Heart,
+  Menu,
+  Sparkles,
+} from "lucide-react";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user);
@@ -23,7 +31,7 @@ const NavBar = () => {
   };
 
   const menuItems = [
-    { path: "/", label: "Discover", icon: <Heart className="w-5 h-5" /> },
+    { path: "/", label: "Discover", icon: <Sparkles className="w-5 h-5" /> },
     {
       path: "/connections",
       label: "Connections",
@@ -38,14 +46,20 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="navbar bg-base-200/95 backdrop-blur-sm shadow-lg px-4 fixed top-0 z-50 w-full border-b border-base-300">
+    <div className="navbar bg-white/10 backdrop-blur-xl shadow-sm px-4 fixed top-0 z-50 w-full border-b border-white/20">
       <div className="navbar-start">
         <Link
           to="/"
-          className="btn btn-ghost text-xl font-bold text-primary hover:bg-primary/10 transition-all duration-200"
+          className="btn btn-ghost text-xl font-bold hover:bg-white/10 transition-all duration-300 group"
         >
-          <Heart className="w-6 h-6 mr-2" />
-          <span className="hidden sm:inline">stackSwipe</span>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-cosmic-500 to-nebula-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Heart className="w-5 h-5 text-white" />
+            </div>
+            <span className="hidden sm:inline bg-gradient-to-r from-cosmic-600 to-nebula-600 bg-clip-text text-transparent">
+              StackSwipe
+            </span>
+          </div>
         </Link>
       </div>
 
@@ -56,13 +70,21 @@ const NavBar = () => {
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`btn btn-ghost btn-sm ${
+                  className={`btn btn-ghost btn-sm hover:bg-white/10 transition-all duration-300 ${
                     location.pathname === item.path
-                      ? "bg-primary text-primary-content"
-                      : "hover:bg-primary/10"
+                      ? "bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white shadow-lg"
+                      : "text-gray-700 hover:text-cosmic-600"
                   }`}
                 >
-                  {item.icon}
+                  <div
+                    className={`transition-transform duration-300 ${
+                      location.pathname === item.path
+                        ? "scale-110"
+                        : "group-hover:scale-110"
+                    }`}
+                  >
+                    {item.icon}
+                  </div>
                   <span className="hidden xl:inline">{item.label}</span>
                 </Link>
               </li>
@@ -77,10 +99,10 @@ const NavBar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all duration-200"
+              className="btn btn-ghost btn-circle avatar hover:bg-white/10 hover:scale-110 transition-all duration-300 relative group"
             >
               {user?.photoUrl ? (
-                <div className="w-10 rounded-full">
+                <div className="w-10 rounded-full ring-2 ring-cosmic-300 group-hover:ring-cosmic-500 transition-all duration-300">
                   <img
                     alt={`${user.firstName}'s profile`}
                     src={user.photoUrl}
@@ -88,32 +110,31 @@ const NavBar = () => {
                   />
                 </div>
               ) : (
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User2 className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cosmic-400 to-nebula-400 flex items-center justify-center group-hover:from-cosmic-500 group-hover:to-nebula-500 transition-all duration-300">
+                  <User2 className="w-6 h-6 text-white" />
                 </div>
               )}
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-aurora-400 rounded-full animate-pulse"></div>
             </div>
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content bg-base-100 rounded-box shadow-xl mt-3 w-64 p-4 border border-base-300"
+              className="menu dropdown-content bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl mt-3 w-64 p-4 border border-white/30"
             >
-              {/* User Info */}
-              <div className="px-4 py-3 border-b border-base-200 mb-2">
-                <p className="font-semibold text-base-content">{`${user.firstName} ${user.lastName}`}</p>
-                <p className="text-sm text-base-content/60">{user.emailId}</p>
+              <div className="px-4 py-3 border-b border-white/20 mb-2">
+                <p className="font-semibold text-gray-800">{`${user.firstName} ${user.lastName}`}</p>
+                <p className="text-sm text-gray-600">{user.emailId}</p>
               </div>
 
-              {/* Mobile menu items */}
-              <div className="lg:hidden border-b border-base-200 mb-2 pb-2">
+              <div className="lg:hidden border-b border-white/20 mb-2 pb-2">
                 {menuItems.map((item) => (
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className={`flex items-center gap-3 ${
+                      className={`flex items-center gap-3 rounded-xl transition-all duration-300 ${
                         location.pathname === item.path
-                          ? "bg-primary/10 text-primary"
-                          : ""
+                          ? "bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white"
+                          : "hover:bg-white/10 text-gray-700"
                       }`}
                     >
                       {item.icon}
@@ -126,7 +147,7 @@ const NavBar = () => {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="text-error hover:bg-error/10 hover:text-error flex items-center gap-3"
+                  className="text-red-500 hover:bg-red-50 hover:text-red-600 flex items-center gap-3 rounded-xl transition-all duration-300"
                 >
                   <LogOut className="w-5 h-5" />
                   Logout
@@ -137,7 +158,7 @@ const NavBar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn btn-primary"
+            className="btn bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white border-none hover:from-cosmic-600 hover:to-nebula-600 hover:scale-105 transition-all duration-300 shadow-lg"
           >
             Get Started
           </Link>

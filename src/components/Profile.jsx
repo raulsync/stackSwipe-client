@@ -6,7 +6,7 @@ const Profile = () => {
 
   return (
     user && (
-      <div>
+      <div className="animate-fade-in">
         <EditProfile user={user} />
       </div>
     )
