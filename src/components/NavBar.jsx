@@ -1,18 +1,9 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { removeUser } from "../store/features/userSlice";
 import { BASE_URL } from "../utils/constants";
-import {
-  LogOut,
-  User2,
-  Users,
-  Bell,
-  Heart,
-  Menu,
-  Sparkles,
-} from "lucide-react";
+import { LogOut, User2, Users, Bell, Heart } from "lucide-react";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user);
@@ -31,7 +22,7 @@ const NavBar = () => {
   };
 
   const menuItems = [
-    { path: "/", label: "Discover", icon: <Sparkles className="w-5 h-5" /> },
+    { path: "/feed", label: "Discover", icon: <Heart className="w-5 h-5" /> },
     {
       path: "/connections",
       label: "Connections",
@@ -46,19 +37,17 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="navbar bg-white/10 backdrop-blur-xl shadow-sm px-4 fixed top-0 z-50 w-full border-b border-white/20">
+    <div className="navbar bg-white border-b border-gray-200 px-4 fixed top-0 z-50 w-full">
       <div className="navbar-start">
         <Link
-          to="/"
-          className="btn btn-ghost text-xl font-bold hover:bg-white/10 transition-all duration-300 group"
+          to={"/feed"}
+          className="btn btn-ghost text-xl font-bold text-black hover:bg-gray-50 transition-colors duration-200"
         >
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-cosmic-500 to-nebula-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
               <Heart className="w-5 h-5 text-white" />
             </div>
-            <span className="hidden sm:inline bg-gradient-to-r from-cosmic-600 to-nebula-600 bg-clip-text text-transparent">
-              StackSwipe
-            </span>
+            <span className="hidden sm:inline">StackSwipe</span>
           </div>
         </Link>
       </div>
@@ -70,21 +59,13 @@ const NavBar = () => {
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`btn btn-ghost btn-sm hover:bg-white/10 transition-all duration-300 ${
+                  className={`btn btn-ghost btn-sm transition-all duration-200 ${
                     location.pathname === item.path
-                      ? "bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white shadow-lg"
-                      : "text-gray-700 hover:text-cosmic-600"
+                      ? "bg-black text-white"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  <div
-                    className={`transition-transform duration-300 ${
-                      location.pathname === item.path
-                        ? "scale-110"
-                        : "group-hover:scale-110"
-                    }`}
-                  >
-                    {item.icon}
-                  </div>
+                  {item.icon}
                   <span className="hidden xl:inline">{item.label}</span>
                 </Link>
               </li>
@@ -99,10 +80,10 @@ const NavBar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar hover:bg-white/10 hover:scale-110 transition-all duration-300 relative group"
+              className="btn btn-ghost btn-circle avatar hover:bg-gray-100 transition-colors duration-200"
             >
               {user?.photoUrl ? (
-                <div className="w-10 rounded-full ring-2 ring-cosmic-300 group-hover:ring-cosmic-500 transition-all duration-300">
+                <div className="w-10 rounded-full ring-2 ring-gray-200">
                   <img
                     alt={`${user.firstName}'s profile`}
                     src={user.photoUrl}
@@ -110,31 +91,30 @@ const NavBar = () => {
                   />
                 </div>
               ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cosmic-400 to-nebula-400 flex items-center justify-center group-hover:from-cosmic-500 group-hover:to-nebula-500 transition-all duration-300">
-                  <User2 className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                  <User2 className="w-6 h-6 text-gray-600" />
                 </div>
               )}
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-aurora-400 rounded-full animate-pulse"></div>
             </div>
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl mt-3 w-64 p-4 border border-white/30"
+              className="menu dropdown-content bg-white rounded-lg shadow-lg border border-gray-200 mt-3 w-64 p-4"
             >
-              <div className="px-4 py-3 border-b border-white/20 mb-2">
-                <p className="font-semibold text-gray-800">{`${user.firstName} ${user.lastName}`}</p>
+              <div className="px-4 py-3 border-b border-gray-200 mb-2">
+                <p className="font-semibold text-gray-900">{`${user.firstName} ${user.lastName}`}</p>
                 <p className="text-sm text-gray-600">{user.emailId}</p>
               </div>
 
-              <div className="lg:hidden border-b border-white/20 mb-2 pb-2">
+              <div className="lg:hidden border-b border-gray-200 mb-2 pb-2">
                 {menuItems.map((item) => (
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className={`flex items-center gap-3 rounded-xl transition-all duration-300 ${
+                      className={`flex items-center gap-3 rounded-lg transition-colors duration-200 ${
                         location.pathname === item.path
-                          ? "bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white"
-                          : "hover:bg-white/10 text-gray-700"
+                          ? "bg-black text-white"
+                          : "hover:bg-gray-100 text-gray-700"
                       }`}
                     >
                       {item.icon}
@@ -147,7 +127,7 @@ const NavBar = () => {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="text-red-500 hover:bg-red-50 hover:text-red-600 flex items-center gap-3 rounded-xl transition-all duration-300"
+                  className="text-red-600 hover:bg-red-50 flex items-center gap-3 rounded-lg transition-colors duration-200"
                 >
                   <LogOut className="w-5 h-5" />
                   Logout
@@ -158,7 +138,7 @@ const NavBar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white border-none hover:from-cosmic-600 hover:to-nebula-600 hover:scale-105 transition-all duration-300 shadow-lg"
+            className="btn bg-black text-white border-none hover:bg-gray-800 transition-colors duration-200"
           >
             Get Started
           </Link>

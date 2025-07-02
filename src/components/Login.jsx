@@ -13,7 +13,6 @@ import {
   Eye,
   EyeOff,
   Heart,
-  Sparkles,
 } from "lucide-react";
 
 const Login = () => {
@@ -63,7 +62,7 @@ const Login = () => {
       });
 
       dispatch(addUser(isLogin ? res.data : res.data.data));
-      navigate(isLogin ? "/" : "/profile");
+      navigate(isLogin ? "/feed" : "/profile");
     } catch (error) {
       setError(
         error?.response?.data || error.message || "Something went wrong"
@@ -85,33 +84,25 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-cosmic-50 via-nebula-50 to-aurora-50 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-cosmic-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-float"></div>
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-nebula-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-float animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-aurora-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse-slow"></div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-lg">
-        <div className="bg-white/20 backdrop-blur-xl shadow-2xl border border-white/30 rounded-3xl overflow-hidden">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-lg">
+        <div className="bg-white shadow-lg border border-gray-200 rounded-2xl overflow-hidden animate-scale-in">
           <div className="p-6 sm:p-8">
+            {/* Header */}
             <div className="text-center mb-6">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-cosmic-500 to-nebula-500 rounded-2xl flex items-center justify-center relative animate-glow">
+                <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center">
                   <Heart className="w-7 h-7 text-white" />
-                  <Sparkles className="w-4 h-4 text-aurora-300 absolute -top-1 -right-1 animate-pulse" />
                 </div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-cosmic-600 to-nebula-600 bg-clip-text text-transparent">
-                  StackSwipe
-                </h1>
+                <h1 className="text-3xl font-bold text-black">StackSwipe</h1>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-800">
-                {isLogin ? "Welcome Back!" : "Join StackSwipe"}
+              <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900">
+                {isLogin ? "Welcome Back" : "Join StackSwipe"}
               </h2>
               <p className="text-gray-600 text-sm sm:text-base">
                 {isLogin
-                  ? "Sign in to continue your journey "
-                  : "Start your journey to meaningful connections "}
+                  ? "Sign in to continue your journey"
+                  : "Start your journey to meaningful connections"}
               </p>
             </div>
 
@@ -127,15 +118,15 @@ const Login = () => {
                         First Name
                       </span>
                     </label>
-                    <div className="relative group">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cosmic-500 transition-colors duration-300" />
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <input
                         type="text"
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
                         placeholder="John"
-                        className="input w-full pl-10 bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                        className="input w-full pl-10 bg-white border-gray-300 focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 rounded-lg"
                       />
                     </div>
                   </div>
@@ -145,15 +136,15 @@ const Login = () => {
                         Last Name
                       </span>
                     </label>
-                    <div className="relative group">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cosmic-500 transition-colors duration-300" />
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <input
                         type="text"
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleInputChange}
                         placeholder="Doe"
-                        className="input w-full pl-10 bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                        className="input w-full pl-10 bg-white border-gray-300 focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 rounded-lg"
                       />
                     </div>
                   </div>
@@ -166,15 +157,15 @@ const Login = () => {
                     Email
                   </span>
                 </label>
-                <div className="relative group">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cosmic-500 transition-colors duration-300" />
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
                     type="email"
                     name="emailId"
                     value={formData.emailId}
                     onChange={handleInputChange}
                     placeholder="you@example.com"
-                    className="input w-full pl-10 bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                    className="input w-full pl-10 bg-white border-gray-300 focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 rounded-lg"
                   />
                 </div>
               </div>
@@ -185,20 +176,20 @@ const Login = () => {
                     Password
                   </span>
                 </label>
-                <div className="relative group">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cosmic-500 transition-colors duration-300" />
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="••••••••"
-                    className="input w-full pl-10 pr-12 bg-white/50 backdrop-blur-sm border-white/30 focus:border-cosmic-400 focus:bg-white/70 transition-all duration-300 rounded-xl"
+                    className="input w-full pl-10 pr-12 bg-white border-gray-300 focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 rounded-lg"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-cosmic-500 transition-colors duration-300"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -210,7 +201,7 @@ const Login = () => {
               </div>
 
               {error && (
-                <div className="alert bg-red-100/50 border border-red-200 text-red-700 rounded-xl">
+                <div className="alert bg-red-50 border border-red-200 text-red-700 rounded-lg">
                   <AlertCircle className="w-5 h-5" />
                   <span className="text-sm">{error}</span>
                 </div>
@@ -218,15 +209,15 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="btn w-full text-lg bg-gradient-to-r from-cosmic-500 to-nebula-500 text-white border-none hover:from-cosmic-600 hover:to-nebula-600 hover:scale-[1.02] transition-all duration-300 shadow-lg rounded-xl"
+                className="btn w-full text-lg bg-black text-white border-none hover:bg-gray-800 transition-colors duration-200 rounded-lg"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : isLogin ? (
-                  "Sign In "
+                  "Sign In"
                 ) : (
-                  "Create Account "
+                  "Create Account"
                 )}
               </button>
 
@@ -235,11 +226,9 @@ const Login = () => {
               <button
                 type="button"
                 onClick={toggleAuth}
-                className="btn btn-outline w-full  text-cosmic-900 hover:bg-cosmic-600 hover:border-cosmic-400 hover:scale-[1.02] transition-all duration-300 rounded-xl"
+                className="btn btn-outline w-full border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 rounded-lg"
               >
-                {isLogin
-                  ? "Create new account"
-                  : "Sign in to existing account "}
+                {isLogin ? "Create new account" : "Sign in to existing account"}
               </button>
             </form>
           </div>
