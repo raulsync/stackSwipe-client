@@ -41,7 +41,7 @@ function App() {
             element={<Requests />}
           />
           <Route
-            path="/chat/:userid"
+            path="/chat/:senderId"
             element={<Chat />}
           />
         </Route>

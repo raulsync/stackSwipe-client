@@ -40,7 +40,7 @@ const NavBar = () => {
     <div className="navbar bg-white border-b border-gray-200 px-4 fixed top-0 z-50 w-full">
       <div className="navbar-start">
         <Link
-          to={"/feed"}
+          to={user ? "/feed" : "/"}
           className="btn btn-ghost text-xl font-bold text-black hover:bg-gray-50 transition-colors duration-200"
         >
           <div className="flex items-center gap-2">
